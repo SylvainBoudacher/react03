@@ -5,11 +5,13 @@ import {
 	Col,
 	Card
 } from 'react-bootstrap';
+import Link from '../../components/Link';
 import './Home.scss';
 
 const Home = ({onSearch}) => {
 	const [searchedValue, setSearchedValue] = useState('')
 	const [searchedValueError, setSearchedValueError] = useState(null);
+	const [showLink, setShowLink] = useState(false);
 
 	const handleSearchedValue = (event) => {
 		event.preventDefault();
@@ -19,7 +21,13 @@ const Home = ({onSearch}) => {
 
 	const handleOnSubmit = (event) => {
 		event.preventDefault();
-		onSearch(searchedValue);
+		if (searchedValue) {
+			setSearchedValueError(null);
+			setShowLink(true);
+			onSearch(searchedValue);
+		} else {
+			setSearchedValueError('Entrer une valeur');
+		}
 	}
 
 	return (
@@ -39,8 +47,9 @@ const Home = ({onSearch}) => {
 								<span className="d-block">Rechercher un pokémon</span>
 								<form onSubmit={handleOnSubmit} noValidate>
 									<input className="mt-2" type="text" value={searchedValue} onChange={handleSearchedValue} placeholder="Exemple: Charizard" />
-									{ searchedValueError && <span className="color-red">{searchedValueError}</span> }
 									<input className="mt-2" type="submit"/>
+									{ searchedValueError && <span className="d-block color-red">{searchedValueError}</span> }
+									{ showLink && <span className="d-block">Aller sur <Link href="/firstapi">/firstapi</Link> pour voir le résultat.</span>}
 								</form>
 							</Card.Body>
 						</Card>
