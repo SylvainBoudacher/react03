@@ -6,7 +6,7 @@ import {
 import Link from '../../components/Link';
 import './FirstApi.scss';
 
-const FirstApi = ({value}) => {
+const FirstApi = ({value, color, onResult}) => {
 	const url = 'https://pokeapi.co/api/v2/pokemon';
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -20,6 +20,7 @@ const FirstApi = ({value}) => {
 			const result = await response.json();
 			if (result && result.name) {
 				result && setData(result);
+				onResult(result);
 				setLoading(false);
 			} else {
 				setError('Entrer un Pokémon existant');
@@ -32,7 +33,8 @@ const FirstApi = ({value}) => {
 	}
 
 	useEffect(() => {
-		fetchPokemon(value);
+		value && fetchPokemon(value);
+		!value && setError('Entrer un Pokémon existant');
 	}, [])
 
 	return (
@@ -49,10 +51,10 @@ const FirstApi = ({value}) => {
 					<Card style={{ width: '18rem' }}>
 						<Card.Img variant="top" src={data?.sprites?.front_default} />
 						<Card.Body>
-							<Card.Title><span className="text-capitalize">{data?.name}</span></Card.Title>
+							<Card.Title><span className="text-capitalize" style={{color}}>{data?.name}</span></Card.Title>
 							<Card.Text>
-								<p><b>id:</b> {data?.id}</p>
-								<p><b>weight:</b> {data?.weight}</p>
+								<span className="d-block"><b>id:</b> {data?.id}</span>
+								<span className="d-block"><b>weight:</b> {data?.weight}</span>
 							</Card.Text>
 						</Card.Body>
 					</Card>
