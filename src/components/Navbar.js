@@ -6,7 +6,7 @@ function Navbar() {
 	return (
 		<ReactNavbar variant="dark" bg="dark">
 			<Container>
-				<ReactNavbar.Brand href="#">React03</ReactNavbar.Brand>
+				<ReactNavbar.Brand href="/">React03</ReactNavbar.Brand>
 				<Nav className="ml-auto">
 					<Link className="nav-link" href="/">Home</Link>
 					<Link className="nav-link" href="/firstapi">FirstApi</Link>
